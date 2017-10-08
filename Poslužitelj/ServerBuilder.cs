@@ -14,21 +14,16 @@ namespace Poslužitelj
     class ServerBuilder
     {
         #region CONSTRUSTORS
-        public ServerBuilder(int ipAddress)
+        public ServerBuilder(int portNumber)
         {
-            PortAdress = ipAddress;
+            PortAdress = portNumber;
         }
 
-        public ServerBuilder(IPAddress ipAdress, int portAdress)
-        {
-            IpAddress = ipAdress;
-            PortAdress = portAdress;
-        }
         #endregion
 
-        private void Listener()
+        public void StartListener()
         {
-            TcpListener listener = new TcpListener(IpAddress, PortAdress);
+            TcpListener listener = new TcpListener(IPAddress.Any, PortAdress);
             listener.Start();
             TcpClient client = listener.AcceptTcpClient();
         }
@@ -41,7 +36,6 @@ namespace Poslužitelj
         #region VARIABLES AND PROPERIES 
         public string ListeningPort { set; get; }
         private X509Certificate serverCertificate = null;
-        private IPAddress IpAddress { get; set; } = IPAddress.Any;
         private int PortAdress { get; set; } = 433;
         #endregion
     }
