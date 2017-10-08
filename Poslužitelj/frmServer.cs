@@ -23,7 +23,7 @@ namespace Poslužitelj
 
             if (CheckPort(txtPortNumber.Text))
             {
-                ServerBuilder server = new ServerBuilder(portNumber);
+                ServerBuilder server = new ServerBuilder(portNumber,ValidateClient());
                 server.StartListener();
             }
             else
@@ -31,10 +31,22 @@ namespace Poslužitelj
                 displayBox.AppendText("Nope\n");
             }
         }
-
+        /// <summary>
+        /// Provjera ako je portNumber dobro upisan , port number može biti od 1 do 65535
+        /// </summary>
+        /// <param name="txtPortNumber">string varijabla koja sadrži port</param>
+        /// <returns>rezultat parsiranja</returns>
         private bool CheckPort(string txtPortNumber)
         {
             return (Int32.TryParse(txtPortNumber, out portNumber) && (portNumber < 65536));
+        }
+        /// <summary>
+        /// Provjera ako server traži validaciju klijenta
+        /// </summary>
+        /// <returns>0 = false 1 = true </returns>
+        private bool ValidateClient()
+        {
+            return (Convert.ToInt32(ClientValidation.SelectedValue) == 1);
         }
 
 

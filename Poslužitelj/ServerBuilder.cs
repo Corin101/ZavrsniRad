@@ -14,12 +14,14 @@ namespace Poslužitelj
     class ServerBuilder
     {
         #region CONSTRUSTORS
-        public ServerBuilder(int portNumber)
+        public ServerBuilder(int portNumber,bool clientCertificate)
         {
             PortAdress = portNumber;
+            requestClientCertificate = clientCertificate;
         }
 
         #endregion
+
 
         public void StartListener()
         {
@@ -29,12 +31,19 @@ namespace Poslužitelj
         }
 
 
+        private bool CheckValidation(TcpClient client)
+        {
+            SslStream sslStream = new SslStream(client.GetStream(),false);
+            sslStream.AuthenticateAsServer(serverCertificate, requestClientCertificate, SslProtocols.Tls, true);
 
+
+            return false;
+        }
 
 
 
         #region VARIABLES AND PROPERIES 
-        public string ListeningPort { set; get; }
+        private bool requestClientCertificate = false;
         private X509Certificate serverCertificate = null;
         private int PortAdress { get; set; } = 433;
         #endregion
