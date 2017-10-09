@@ -35,6 +35,8 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.ClientValidation = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtCert = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // displayBox
@@ -67,9 +69,9 @@
             // 
             // txtPortNumber
             // 
-            this.txtPortNumber.Location = new System.Drawing.Point(225, 78);
+            this.txtPortNumber.Location = new System.Drawing.Point(210, 78);
             this.txtPortNumber.Name = "txtPortNumber";
-            this.txtPortNumber.Size = new System.Drawing.Size(82, 22);
+            this.txtPortNumber.Size = new System.Drawing.Size(97, 22);
             this.txtPortNumber.TabIndex = 1;
             // 
             // btnStart
@@ -89,11 +91,10 @@
             this.ClientValidation.Items.AddRange(new object[] {
             "No",
             "Yes"});
-            this.ClientValidation.Location = new System.Drawing.Point(225, 114);
+            this.ClientValidation.Location = new System.Drawing.Point(210, 114);
             this.ClientValidation.Name = "ClientValidation";
-            this.ClientValidation.Size = new System.Drawing.Size(82, 24);
+            this.ClientValidation.Size = new System.Drawing.Size(97, 24);
             this.ClientValidation.TabIndex = 7;
-            this.ClientValidation.SelectedIndex = 0;
             // 
             // label2
             // 
@@ -104,11 +105,33 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Client Validation:";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(38, 164);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(109, 17);
+            this.label4.TabIndex = 9;
+            this.label4.Text = "Load certificate:";
+            // 
+            // txtCert
+            // 
+            this.txtCert.BackColor = System.Drawing.SystemColors.Window;
+            this.txtCert.Location = new System.Drawing.Point(210, 160);
+            this.txtCert.Name = "txtCert";
+            this.txtCert.Size = new System.Drawing.Size(97, 24);
+            this.txtCert.TabIndex = 10;
+            this.txtCert.Text = "Browse";
+            this.txtCert.UseVisualStyleBackColor = false;
+            this.txtCert.Click += new System.EventHandler(this.txtCert_Click);
+            // 
             // frmServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(879, 422);
+            this.Controls.Add(this.txtCert);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.ClientValidation);
             this.Controls.Add(this.btnStart);
@@ -132,6 +155,8 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.ComboBox ClientValidation;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button txtCert;
     }
 }
 

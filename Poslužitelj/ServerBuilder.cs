@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace Poslužitelj
 {
-    class ServerBuilder
+    public class ServerBuilder
     {
         #region CONSTRUSTORS
-        public ServerBuilder(int portNumber,bool clientCertificate)
+        public ServerBuilder(int portNumber,X509Certificate certificate)
         {
             PortAdress = portNumber;
-            requestClientCertificate = clientCertificate;
+            clientCertificate = certificate;
         }
 
         #endregion
@@ -37,6 +37,7 @@ namespace Poslužitelj
             sslStream.AuthenticateAsServer(serverCertificate, requestClientCertificate, SslProtocols.Tls, true);
 
 
+
             return false;
         }
 
@@ -45,7 +46,8 @@ namespace Poslužitelj
         #region VARIABLES AND PROPERIES 
         private bool requestClientCertificate = false;
         private X509Certificate serverCertificate = null;
-        private int PortAdress { get; set; } = 433;
+        private X509Certificate clientCertificate = null;
+        private int PortAdress { get; set; }
         #endregion
     }
 }
