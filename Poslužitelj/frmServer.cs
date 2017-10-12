@@ -17,6 +17,7 @@ namespace Poslužitelj
         public frmServer()
         {
             InitializeComponent();
+            ClientValidation.SelectedIndex = 0;
         }
 
         private void btnStart_Click(object sender, EventArgs e)
@@ -78,7 +79,5 @@ namespace Poslužitelj
 
         private int portNumber;
         private X509Certificate certificate;
-
-
     }
 }

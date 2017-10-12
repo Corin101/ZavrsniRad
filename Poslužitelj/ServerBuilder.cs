@@ -27,24 +27,98 @@ namespace Poslužitelj
         {
             TcpListener listener = new TcpListener(IPAddress.Any, PortAdress);
             listener.Start();
-            TcpClient client = listener.AcceptTcpClient();
+
+            while (true)
+            {
+                // Application blocks while waiting for an incoming connection. Press CNTL-C to terminate the server.
+                TcpClient client = listener.AcceptTcpClient();
+                ValidationAndCommunication(client);
+                    //retrun if successfull
+            }
+
         }
 
 
-        private bool CheckValidation(TcpClient client)
+        private bool ValidationAndCommunication(TcpClient client)
         {
+            serverCertificate = new X509Certificate();
+            GetCertificateFromStore();
+            bool success = true;
+
             SslStream sslStream = new SslStream(client.GetStream(),false);
-            sslStream.AuthenticateAsServer(serverCertificate, requestClientCertificate, SslProtocols.Tls, true);
+            try
+            {
+                sslStream.AuthenticateAsServer(serverCertificate, requestClientCertificate, SslProtocols.Tls, true);
 
+                sslStream.ReadTimeout = 5000;
+                sslStream.WriteTimeout = 5000;
 
+                string messageData = ReadMessage(sslStream);
 
-            return false;
+                // Write a message to the client.
+                byte[] message = Encoding.UTF8.GetBytes("Server has received your msg!.<EOF>");
+                sslStream.Write(message);
+            }
+            catch (AuthenticationException expt)
+            {
+                success = false;
+                // propagate expt msg
+            }
+            finally
+            {
+                sslStream.Close();
+                client.Close();
+            }
+            return success;
         }
 
 
+        static string ReadMessage(SslStream sslStream)
+        {
+            // Read the  message sent by the client. The client signals the end of the message using the "<EOF>" marker.
+            byte[] buffer = new byte[2048];
+            StringBuilder messageData = new StringBuilder();
+            int bytes = -1;
+            do
+            {
+                // Read the client's test message.
+                bytes = sslStream.Read(buffer, 0, buffer.Length);
 
-        #region VARIABLES AND PROPERIES 
-        private bool requestClientCertificate = false;
+                // Use Decoder class to convert from bytes to UTF8 in case a character spans two buffers.
+                Decoder decoder = Encoding.UTF8.GetDecoder();
+                char[] chars = new char[decoder.GetCharCount(buffer, 0, bytes)];
+                decoder.GetChars(buffer, 0, bytes, chars, 0);
+                messageData.Append(chars);
+                // Check for EOF or an empty message.
+                if (messageData.ToString().IndexOf("<EOF>") != -1)
+                {
+                    break;
+                }
+            } while (bytes != 0);
+
+            return messageData.ToString();
+        }
+
+
+        private void GetCertificateFromStore()
+        {
+            X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
+            store.Open(OpenFlags.ReadOnly);
+            var certificates = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, "CN=Corin-PC", false);
+            store.Close();
+
+            if (certificates.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                serverCertificate = certificates[0];
+            }
+        }
+
+#region VARIABLES AND PROPERIES 
+private bool requestClientCertificate = false;
         private X509Certificate serverCertificate = null;
         private X509Certificate clientCertificate = null;
         private int PortAdress { get; set; }
