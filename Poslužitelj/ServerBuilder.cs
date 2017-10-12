@@ -31,23 +31,23 @@ namespace Poslužitelj
        
         public void StartListener()
         {
-            
+           
             TcpListener listener = new TcpListener(IPAddress.Any, PortAdress);
             listener.Start();
             mainForm.SetText($"Listening fora client on port: {PortAdress}");
             while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
-                ValidationAndCommunication(client);
-                    //retrun if successfull
+                if (!ValidationAndCommunication(client))
+                    break;
             }
-
         }
 
         private bool ValidationAndCommunication(TcpClient client)
         {
             serverCertificate = new X509Certificate();
-            GetCertificateFromStore();
+            if (certificateName != null)
+                GetCertificateFromStore();
             bool success = true;
 
             SslStream sslStream = new SslStream(client.GetStream(),false);
@@ -59,7 +59,8 @@ namespace Poslužitelj
                 sslStream.WriteTimeout = 5000;
 
                 string messageData = ReadMessage(sslStream);
-
+                mainForm.SetText("Message received from client:: ");
+                mainForm.SetText(messageData);
                 // Write a message to the client.
                 byte[] message = Encoding.UTF8.GetBytes("Server has received your msg!.<EOF>");
                 sslStream.Write(message);
@@ -105,7 +106,7 @@ namespace Poslužitelj
         {
             X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
             store.Open(OpenFlags.ReadOnly);
-            var certificates = store.Certificates.Find(X509FindType.FindBySubjectDistinguishedName, certificateName, false);
+            var certificates = store.Certificates.Find(X509FindType.FindBySubjectName, certificateName, false);
             store.Close();
 
             if (certificates.Count == 0)

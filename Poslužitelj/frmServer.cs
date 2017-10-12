@@ -70,16 +70,7 @@ namespace Poslužitelj
         }
         private bool VerifyCertName()
         {
-            string result;
-            try
-            {
-                result = txtcertName.Text.Substring(txtcertName.Text.Length - 4);
-            }
-            catch
-            {
-                return false;
-            }
-            return result == ".cer" && result.Length > 4;
+            return !(txtcertName.Text.Length == 0);         
         }
         private void TxtCert_Click(object sender, EventArgs e)
         {
