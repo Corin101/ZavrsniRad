@@ -28,6 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServer));
             this.displayBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,6 +46,7 @@
             this.txtcertName = new System.Windows.Forms.TextBox();
             this.chckPort = new System.Windows.Forms.CheckBox();
             this.chckName = new System.Windows.Forms.CheckBox();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,6 +84,8 @@
             this.txtPortNumber.Name = "txtPortNumber";
             this.txtPortNumber.Size = new System.Drawing.Size(97, 22);
             this.txtPortNumber.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.txtPortNumber, resources.GetString("txtPortNumber.ToolTip"));
+            this.txtPortNumber.Click += new System.EventHandler(this.TxtPortNumber_Click);
             // 
             // btnStart
             // 
@@ -90,7 +95,7 @@
             this.btnStart.TabIndex = 2;
             this.btnStart.Text = "Start Server";
             this.btnStart.UseVisualStyleBackColor = true;
-            this.btnStart.Click += new System.EventHandler(this.btnStart_Click);
+            this.btnStart.Click += new System.EventHandler(this.BtnStart_Click);
             // 
             // ClientValidation
             // 
@@ -133,7 +138,7 @@
             this.txtCert.Text = "Browse";
             this.txtCert.UseVisualStyleBackColor = false;
             this.txtCert.Visible = false;
-            this.txtCert.Click += new System.EventHandler(this.txtCert_Click);
+            this.txtCert.Click += new System.EventHandler(this.TxtCert_Click);
             // 
             // groupBox1
             // 
@@ -156,7 +161,7 @@
             this.radioButton2.TabStop = true;
             this.radioButton2.Text = "Store";
             this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.radioButton2.CheckedChanged += new System.EventHandler(this.RadioButton2_CheckedChanged);
             // 
             // radioButton1
             // 
@@ -168,7 +173,7 @@
             this.radioButton1.TabStop = true;
             this.radioButton1.Text = "File";
             this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.radioButton1.CheckedChanged += new System.EventHandler(this.RadioButton1_CheckedChanged);
             // 
             // label5
             // 
@@ -186,7 +191,11 @@
             this.txtcertName.Name = "txtcertName";
             this.txtcertName.Size = new System.Drawing.Size(97, 22);
             this.txtcertName.TabIndex = 13;
+            this.toolTip1.SetToolTip(this.txtcertName, "Enter the name of the server certificate that will be sent to the client for veri" +
+        "fication.\r\nCertificate format must be *.cer, postfix must be included in the nam" +
+        "e\r\n(example:  certificateName.cer)\r\n");
             this.txtcertName.Visible = false;
+            this.txtcertName.Click += new System.EventHandler(this.txtcertName_Click);
             // 
             // chckPort
             // 
@@ -196,7 +205,7 @@
             this.chckPort.Size = new System.Drawing.Size(18, 17);
             this.chckPort.TabIndex = 14;
             this.chckPort.UseVisualStyleBackColor = true;
-            this.chckPort.CheckedChanged += new System.EventHandler(this.chckPort_CheckedChanged);
+            this.chckPort.CheckedChanged += new System.EventHandler(this.ChckPort_CheckedChanged);
             // 
             // chckName
             // 
@@ -207,7 +216,7 @@
             this.chckName.TabIndex = 15;
             this.chckName.UseVisualStyleBackColor = true;
             this.chckName.Visible = false;
-            this.chckName.CheckedChanged += new System.EventHandler(this.chckName_CheckedChanged);
+            this.chckName.CheckedChanged += new System.EventHandler(this.ChckName_CheckedChanged);
             // 
             // frmServer
             // 
@@ -255,6 +264,7 @@
         private System.Windows.Forms.TextBox txtcertName;
         private System.Windows.Forms.CheckBox chckPort;
         private System.Windows.Forms.CheckBox chckName;
+        private System.Windows.Forms.ToolTip toolTip1;
     }
 }
 

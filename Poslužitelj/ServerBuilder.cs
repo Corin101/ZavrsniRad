@@ -19,6 +19,11 @@ namespace Poslužitelj
             PortAdress = portNumber;
             clientCertificate = certificate;
         }
+        public ServerBuilder(int portNumber, string certName)
+        {
+            PortAdress = portNumber;
+            certificateName = certName;
+        }
 
         #endregion
 
