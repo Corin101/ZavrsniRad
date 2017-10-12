@@ -32,36 +32,14 @@ namespace Poslužitelj
                 displayBox.AppendText("Nope\n");
             }
         }
-
-        /// <summary>
-        /// Provjera ako je portNumber dobro upisan , port number može biti od 1 do 65535
-        /// </summary>
-        /// <param name="txtPortNumber">string varijabla koja sadrži port</param>
-        /// <returns>rezultat parsiranja</returns>
         private bool CheckPort(string txtPortNumber)
         {
             return Int32.TryParse(txtPortNumber, out portNumber) && (portNumber < 65536);
         }
-        /// <summary>
-        /// Provjera ako server traži validaciju klijenta
-        /// </summary>
-        /// <returns>0 = false 1 = true </returns>
+
         private bool ValidateClient()
         {
-            return (Convert.ToInt32(ClientValidation.SelectedValue) == 1);
-        }
-        /// <summary>
-        /// Otvara .cer datoteku u X509certificate
-        /// </summary>
-        private void LoadCertificate(string cert)
-        {
-            if (ValidateClient())
-            {
-                certificate = new X509Certificate();
-                certificate.Import(cert);
-            }
-            else
-                certificate = null;
+            return (Convert.ToInt32(ClientValidation.SelectedIndex) == 1);
         }
 
         private void txtCert_Click(object sender, EventArgs e)
@@ -72,12 +50,81 @@ namespace Poslužitelj
                 string cert;
                 cert = dlg.FileName;
                 txtCert.Text = "Loaded!";
-                LoadCertificate(cert);
+                certificate.Import(cert);
+                certificate = new X509Certificate();
+            }
+        }
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            label4.Visible = true;
+            txtCert.Visible = true;
+            chckName.Visible = false;
+            txtcertName.Visible = false;
+            label5.Visible = false;
+        }
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            label4.Visible = false;
+            txtCert.Visible = false;
+            chckName.Visible = true;
+            txtcertName.Visible = true;
+            label5.Visible = true;
+        }
+        private void chckName_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chckName.Checked)
+            {
+                certificateName = txtcertName.Text;
+                txtcertName.Enabled = false;
+                if (!VerifyCertName())
+                    txtcertName.Text = "Wrong Input";
+            }
+            else
+            {
+                txtcertName.Text = "";
+                txtcertName.Enabled = true;
             }
         }
 
+        private bool VerifyCertName()
+        {
+            string result;
+            try
+            {
+                result = txtcertName.Text.Substring(txtcertName.Text.Length - 4);
+            }
+            catch
+            {
+                return false;
+            }          
+            return result == ".cer" && result.Length > 4;
 
+        }
+
+        private void chckPort_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chckPort.Checked)
+            {
+                if (CheckPort(txtPortNumber.Text))
+                    txtPortNumber.Enabled = false;
+                else
+                {
+                    txtPortNumber.Text = "Wrong Input";
+                    txtPortNumber.Enabled = false;
+                }
+            }
+            else
+            {
+                txtPortNumber.Text = "";
+                txtPortNumber.Enabled = true;
+            }
+
+
+        }
         private int portNumber;
+        private string certificateName;
         private X509Certificate certificate;
+
+
     }
 }
