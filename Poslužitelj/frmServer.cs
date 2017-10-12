@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -26,21 +27,36 @@ namespace Poslužitelj
         {
             if (portNumber == 0 || (certificate == null && certificateName == null))
             {
-                displayBox.AppendText("Nope\n");
+                SetText("Port Number, certificate or certificate name must be filled!");
             }
             else
             {
                 ServerBuilder server;
+                Thread ListenerThread;
+                SetText("Starting Server!");
                 if (certificateName == null)
                 {
                     server = new ServerBuilder(portNumber, certificate);
+                    DisableStart();
+                    ListenerThread = new Thread(new ThreadStart(server.StartListener));                
                 }
                 else
                 {
                     server = new ServerBuilder(portNumber, certificateName);
+                    DisableStart();
+                    ListenerThread = new Thread(new ThreadStart(server.StartListener));                   
                 }
-                server.StartListener();
+                ListenerThread.Start();
             }
+        }
+        public void DisableStart()
+        {
+            if (this.InvokeRequired)
+            {
+                this.Invoke((Action)(() => btnStart.Enabled = true));
+                return;
+            }
+            btnStart.Enabled = false;
         }
         #endregion
         #region VALIDATION
@@ -129,7 +145,7 @@ namespace Poslužitelj
             }
         }
         #endregion
-        #region TOOLTIPS
+        #region TOOLTIPS & TEXT
         private void TxtPortNumber_Click(object sender, EventArgs e)
         {
             int durationMilliseconds = 10000;
@@ -140,8 +156,22 @@ namespace Poslužitelj
             int durationMilliseconds = 10000;
             toolTip1.Show(toolTip1.GetToolTip(txtcertName), txtcertName, durationMilliseconds);
         }
-        #endregion
+        public void SetText(string text)
+        {
+            string txt = text;
+            if (displayBox.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                Invoke(d, new object[] { text });
+            }
+            else
+            {
+                displayBox.AppendText(text + Environment.NewLine);
+            }
+        }
+        #endregion 
         #region VARIABLES
+        delegate void SetTextCallback(string text);
         private int portNumber;
         private string certificateName;
         private X509Certificate certificate;

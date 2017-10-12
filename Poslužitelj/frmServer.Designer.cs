@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServer));
-            this.displayBox = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.txtPortNumber = new System.Windows.Forms.TextBox();
@@ -47,18 +46,9 @@
             this.chckPort = new System.Windows.Forms.CheckBox();
             this.chckName = new System.Windows.Forms.CheckBox();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.displayBox = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // displayBox
-            // 
-            this.displayBox.BackColor = System.Drawing.SystemColors.Window;
-            this.displayBox.Location = new System.Drawing.Point(340, 12);
-            this.displayBox.Multiline = true;
-            this.displayBox.Name = "displayBox";
-            this.displayBox.ReadOnly = true;
-            this.displayBox.Size = new System.Drawing.Size(527, 358);
-            this.displayBox.TabIndex = 6;
             // 
             // label1
             // 
@@ -191,9 +181,7 @@
             this.txtcertName.Name = "txtcertName";
             this.txtcertName.Size = new System.Drawing.Size(97, 22);
             this.txtcertName.TabIndex = 13;
-            this.toolTip1.SetToolTip(this.txtcertName, "Enter the name of the server certificate that will be sent to the client for veri" +
-        "fication.\r\nCertificate format must be *.cer, postfix must be included in the nam" +
-        "e\r\n(example:  certificateName.cer)\r\n");
+            this.toolTip1.SetToolTip(this.txtcertName, resources.GetString("txtcertName.ToolTip"));
             this.txtcertName.Visible = false;
             this.txtcertName.Click += new System.EventHandler(this.txtcertName_Click);
             // 
@@ -218,11 +206,21 @@
             this.chckName.Visible = false;
             this.chckName.CheckedChanged += new System.EventHandler(this.ChckName_CheckedChanged);
             // 
+            // displayBox
+            // 
+            this.displayBox.Location = new System.Drawing.Point(321, 12);
+            this.displayBox.Name = "displayBox";
+            this.displayBox.ReadOnly = true;
+            this.displayBox.Size = new System.Drawing.Size(546, 362);
+            this.displayBox.TabIndex = 16;
+            this.displayBox.Text = "";
+            // 
             // frmServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(879, 422);
+            this.Controls.Add(this.displayBox);
             this.Controls.Add(this.chckName);
             this.Controls.Add(this.chckPort);
             this.Controls.Add(this.txtcertName);
@@ -236,7 +234,6 @@
             this.Controls.Add(this.txtPortNumber);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.displayBox);
             this.Name = "frmServer";
             this.Text = "Server";
             this.groupBox1.ResumeLayout(false);
@@ -247,8 +244,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox displayBox;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtPortNumber;
@@ -265,6 +260,7 @@
         private System.Windows.Forms.CheckBox chckPort;
         private System.Windows.Forms.CheckBox chckName;
         private System.Windows.Forms.ToolTip toolTip1;
+        private System.Windows.Forms.RichTextBox displayBox;
     }
 }
 

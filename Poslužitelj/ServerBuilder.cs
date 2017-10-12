@@ -8,6 +8,7 @@ using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Poslužitelj
 {
@@ -27,12 +28,13 @@ namespace Poslužitelj
 
         #endregion
 
-
+       
         public void StartListener()
         {
+            
             TcpListener listener = new TcpListener(IPAddress.Any, PortAdress);
             listener.Start();
-
+            mainForm.SetText($"Listening fora client on port: {PortAdress}");
             while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
@@ -65,7 +67,7 @@ namespace Poslužitelj
             catch (AuthenticationException expt)
             {
                 success = false;
-                // propagate expt msg
+                mainForm.SetText($"Authentication failed: {expt}");
             }
             finally
             {
@@ -116,7 +118,8 @@ namespace Poslužitelj
             }
         }
 
-#region VARIABLES AND PROPERIES 
+        #region VARIABLES AND PROPERIES 
+        frmServer mainForm = (frmServer)Application.OpenForms[0];
         private bool requestClientCertificate = false;
         private string certificateName;
         private X509Certificate serverCertificate = null;

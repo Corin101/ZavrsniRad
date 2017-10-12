@@ -129,4 +129,11 @@ After you enter the port number, check the box on the right.
 
 </value>
   </data>
+  <data name="txtcertName.ToolTip" xml:space="preserve">
+    <value>Enter the name of the server certificate that will be sent to the client for verification.
+Certificate format must be *.cer, postfix must be included in the name
+(example:  certificateName.cer)
+After you enter certificate, check the box to the right!
+</value>
+  </data>
 </root>
