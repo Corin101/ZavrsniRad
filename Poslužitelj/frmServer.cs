@@ -51,12 +51,28 @@ namespace Poslužitelj
         }
         public void DisableStart()
         {
-            if (this.InvokeRequired)
+            if (InvokeRequired)
             {
-                this.Invoke((Action)(() => btnStart.Enabled = true));
+                Invoke((Action)(() => btnStart.Enabled = true));
                 return;
             }
             btnStart.Enabled = false;
+        }
+        public void ResetServer()
+        {
+            if (this.InvokeRequired)
+            {
+                Invoke((Action)(() => chckName.Checked = false));
+                Invoke((Action)(() => chckPort.Checked = false));
+                Invoke((Action)(() => radioButton1.Checked = false));
+                Invoke((Action)(() => radioButton2.Checked = false));
+                Invoke((Action)(() => btnStart.Enabled = true));
+                Invoke((Action)(() => label4.Visible = false));
+                Invoke((Action)(() => txtCert.Visible = false));
+                Invoke((Action)(() => chckName.Visible = false));
+                Invoke((Action)(() => txtcertName.Visible = false));
+                Invoke((Action)(() => label5.Visible = false));
+            }
         }
         #endregion
         #region VALIDATION

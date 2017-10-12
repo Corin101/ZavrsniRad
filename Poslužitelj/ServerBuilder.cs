@@ -46,8 +46,12 @@ namespace Poslužitelj
         private bool ValidationAndCommunication(TcpClient client)
         {
             serverCertificate = new X509Certificate();
-            if (certificateName != null)
-                GetCertificateFromStore();
+            if (certificateName != null && !GetCertificateFromStore())
+            {
+                mainForm.SetText("No Certificate found! Check the name and try again");
+                mainForm.ResetServer();
+                return false;
+            }
             bool success = true;
 
             SslStream sslStream = new SslStream(client.GetStream(),false);
@@ -102,7 +106,7 @@ namespace Poslužitelj
 
             return messageData.ToString();
         }
-        private void GetCertificateFromStore()
+        private bool GetCertificateFromStore()
         {
             X509Store store = new X509Store(StoreName.Root, StoreLocation.LocalMachine);
             store.Open(OpenFlags.ReadOnly);
@@ -111,11 +115,12 @@ namespace Poslužitelj
 
             if (certificates.Count == 0)
             {
-                return;
+                return false;
             }
             else
             {
                 serverCertificate = certificates[0];
+                return true;
             }
         }
 
