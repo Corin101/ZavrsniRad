@@ -48,6 +48,8 @@
             this.chckPort = new System.Windows.Forms.CheckBox();
             this.chckServerName = new System.Windows.Forms.CheckBox();
             this.chckServerCertName = new System.Windows.Forms.CheckBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.txtMsgToServer = new System.Windows.Forms.TextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -242,11 +244,29 @@
             this.chckServerCertName.UseVisualStyleBackColor = true;
             this.chckServerCertName.CheckedChanged += new System.EventHandler(this.chckServerCertName_CheckedChanged);
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(60, 301);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(166, 17);
+            this.label7.TabIndex = 25;
+            this.label7.Text = "Send message to server:";
+            // 
+            // txtMsgToServer
+            // 
+            this.txtMsgToServer.Location = new System.Drawing.Point(12, 331);
+            this.txtMsgToServer.Name = "txtMsgToServer";
+            this.txtMsgToServer.Size = new System.Drawing.Size(298, 22);
+            this.txtMsgToServer.TabIndex = 26;
+            // 
             // frmClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(879, 422);
+            this.Controls.Add(this.txtMsgToServer);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.chckServerCertName);
             this.Controls.Add(this.chckServerName);
             this.Controls.Add(this.chckPort);
@@ -296,6 +316,8 @@
         private System.Windows.Forms.CheckBox chckPort;
         private System.Windows.Forms.CheckBox chckServerName;
         private System.Windows.Forms.CheckBox chckServerCertName;
+        private System.Windows.Forms.Label label7;
+        public System.Windows.Forms.TextBox txtMsgToServer;
     }
 }
 

@@ -8,6 +8,7 @@ using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace Klijent
 {
@@ -32,7 +33,7 @@ namespace Klijent
             {
                 if (e.InnerException != null)
                 {
-                    Console.WriteLine("Inner exception: {0}", e.InnerException.Message);
+                    mainForm.SetText("Inner exception: "+ e.InnerException.Message);
                 }
                 client.Close();
                 return;
@@ -41,15 +42,15 @@ namespace Klijent
             sslStream.Write(messsage);
             sslStream.Flush();
             string serverMessage = ReadMessage(sslStream);
-            Console.WriteLine("Server says: {0}", serverMessage);
+            mainForm.SetText("Server says: " + serverMessage);
             client.Close();
         }
 
-        public static bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
+        public bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
         {
             if (sslPolicyErrors == SslPolicyErrors.None)
                 return true;
-            Console.WriteLine("Certificate error: {0}", sslPolicyErrors);
+            mainForm.SetText("Certificate error: " + sslPolicyErrors);
             return false;
         }
         private string ReadMessage(SslStream sslStream)
@@ -80,5 +81,6 @@ namespace Klijent
         private string messageToServer;
         private Hashtable certificateErrors = new Hashtable();
         private int listeninigPort;
+        frmClient mainForm = (frmClient)Application.OpenForms[0];
     }
 }
