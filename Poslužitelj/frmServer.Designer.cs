@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServer));
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,7 +44,7 @@
             this.txtcertName = new System.Windows.Forms.TextBox();
             this.chckPort = new System.Windows.Forms.CheckBox();
             this.chckName = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.toolTip1 = new System.Windows.Forms.ToolTip();
             this.displayBox = new System.Windows.Forms.RichTextBox();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -64,9 +63,9 @@
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(12, 77);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(92, 17);
+            this.label3.Size = new System.Drawing.Size(99, 17);
             this.label3.TabIndex = 4;
-            this.label3.Text = "Port Number:";
+            this.label3.Text = "Listening Port:";
             // 
             // txtPortNumber
             // 

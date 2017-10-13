@@ -34,7 +34,7 @@ namespace Poslužitelj
            
             TcpListener listener = new TcpListener(IPAddress.Any, PortAdress);
             listener.Start();
-            mainForm.SetText($"Listening fora client on port: {PortAdress}");
+            mainForm.SetText($"Listening for a client on port: {PortAdress}");
             while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
