@@ -42,7 +42,6 @@ namespace Poslužitelj
                     break;
             }
         }
-
         private bool ValidationAndCommunication(TcpClient client)
         {
             serverCertificate = new X509Certificate();

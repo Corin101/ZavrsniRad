@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmServer));
             this.label1 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -44,8 +45,9 @@
             this.txtcertName = new System.Windows.Forms.TextBox();
             this.chckPort = new System.Windows.Forms.CheckBox();
             this.chckName = new System.Windows.Forms.CheckBox();
-            this.toolTip1 = new System.Windows.Forms.ToolTip();
+            this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.displayBox = new System.Windows.Forms.RichTextBox();
+            this.btnEndServer = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -214,11 +216,22 @@
             this.displayBox.TabIndex = 16;
             this.displayBox.Text = "";
             // 
+            // btnEndServer
+            // 
+            this.btnEndServer.Location = new System.Drawing.Point(658, 380);
+            this.btnEndServer.Name = "btnEndServer";
+            this.btnEndServer.Size = new System.Drawing.Size(93, 30);
+            this.btnEndServer.TabIndex = 17;
+            this.btnEndServer.Text = "Stop Server";
+            this.btnEndServer.UseVisualStyleBackColor = true;
+            this.btnEndServer.Click += new System.EventHandler(this.btnEndServer_Click);
+            // 
             // frmServer
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(879, 422);
+            this.Controls.Add(this.btnEndServer);
             this.Controls.Add(this.displayBox);
             this.Controls.Add(this.chckName);
             this.Controls.Add(this.chckPort);
@@ -260,6 +273,7 @@
         private System.Windows.Forms.CheckBox chckName;
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.RichTextBox displayBox;
+        private System.Windows.Forms.Button btnEndServer;
     }
 }
 

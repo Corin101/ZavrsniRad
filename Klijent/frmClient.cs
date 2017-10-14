@@ -23,11 +23,17 @@ namespace Klijent
         #region CLIENT CONFIG
         private void btnStart_Click(object sender, EventArgs e)
         {
-
-            client = new ClientBuilder(serverName, serverCertificateName, portNumber);
-            DisableStart();
-            ClientThread = new Thread(new ThreadStart(client.RunClient));
-
+            if (chckPort.Checked && chckPort.Checked && chckServerCertName.Checked && serverName != "" && serverCertificateName != "" && portNumber != 0)
+            {
+                client = new ClientBuilder(serverName, serverCertificateName, portNumber, "Hello from Client");
+                DisableStart();
+                ClientThread = new Thread(new ThreadStart(client.RunClient));
+                ClientThread.Start();
+            }
+            else
+            {
+                SetText("Port Number, Server Name and Server Certificate Name are Mandatory!");
+            }
         }
         public void DisableStart()
         {
@@ -40,25 +46,20 @@ namespace Klijent
         }
         private void btnEndChat_Click(object sender, EventArgs e)
         {
-            label7.Visible = false;
-            txtMsgToServer.Visible = false;
-            client.endChat = true;
+            this.Close();
         }
-        private void txtMsgToServer_KeyUp(object sender, KeyEventArgs e)
+        private void txtMesgToServer_KeyUp(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
             {
-                client.messageToServer = txtMsgToServer.Text;
-                txtMsgToServer.Text = "";
+                client = new ClientBuilder(serverName, serverCertificateName, portNumber, txtMesgToServer.Text);
+                DisableStart();
+                ClientThread = new Thread(new ThreadStart(client.RunClient));
+                ClientThread.Start();
+                txtMesgToServer.Text = "";
                 e.Handled = true;
             }
         }
-        public void sendMsgAvailable()
-        {
-            label7.Visible = true;
-            txtMsgToServer.Visible = true;
-        }
-
         #endregion
         #region TOOLTIPS & TEXT
         public void SetText(string text)
@@ -180,13 +181,14 @@ namespace Klijent
         #endregion
         #region VARIABLES
         delegate void SetTextCallback(string text);
-        private string clientCertificateName;
+        private string clientCertificateName = "";
         private int portNumber;
-        private string serverName;
-        private string serverCertificateName;
+        private string serverName = "";
+        private string serverCertificateName = "";
         private X509Certificate certificate;
         ClientBuilder client;
         Thread ClientThread;
         #endregion
+
     }
 }

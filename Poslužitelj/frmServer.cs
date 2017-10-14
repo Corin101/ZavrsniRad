@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Security.Cryptography.X509Certificates;
+using System.Security.Permissions;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -31,8 +32,6 @@ namespace Poslužitelj
             }
             else
             {
-                ServerBuilder server;
-                Thread ListenerThread;
                 SetText("Starting Server!");
                 if (certificateName == null)
                 {
@@ -73,6 +72,10 @@ namespace Poslužitelj
                 Invoke((Action)(() => txtcertName.Visible = false));
                 Invoke((Action)(() => label5.Visible = false));
             }
+        }
+        private void btnEndServer_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
         #endregion
         #region VALIDATION
@@ -182,6 +185,8 @@ namespace Poslužitelj
         private int portNumber;
         private string certificateName;
         private X509Certificate certificate;
+        ServerBuilder server;
+        Thread ListenerThread;
         #endregion
     }
 }

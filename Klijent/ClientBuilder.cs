@@ -14,47 +14,41 @@ namespace Klijent
 {
     class ClientBuilder
     {
-        public ClientBuilder(string srvName, string serverCertName, int portNumber)
+        public ClientBuilder(string srvName, string serverCertName, int portNumber, string msg)
         {
             serverName = srvName;
             serverCertificateName = serverCertName;
             listeninigPort = portNumber;
+            messageToServer = msg;
         }
 
         public void RunClient()
         {
-            TcpClient client = new TcpClient(serverName, listeninigPort);
-            SslStream sslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
+            client = new TcpClient(serverName, listeninigPort);
+            sslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
             try
             {
                 sslStream.AuthenticateAsClient(serverCertificateName);
             }
-            catch (AuthenticationException e)
+            catch (Exception e)
             {
                 if (e.InnerException != null)
                 {
                     mainForm.SetText("Inner exception: "+ e.InnerException.Message);
                 }
                 client.Close();
+                mainForm.DisableStart();
                 return;
             }
-            mainForm.sendMsgAvailable();
-            while (true)
-            {
-                if (writeFlag)
-                {
-                    byte[] messsage = Encoding.UTF8.GetBytes(messageToServer + "<EOF>");
-                    mainForm.SetText("Message sent to server: " + messageToServer);
-                    sslStream.Write(messsage);
-                    sslStream.Flush();
-                    string serverMessage = ReadMessage(sslStream);
-                    mainForm.SetText("Server says: " + serverMessage);
-                    writeFlag = false;
-                }
-                if (endChat)
-                    break;
-            }           
+            byte[] messsage = Encoding.UTF8.GetBytes(messageToServer + "<EOF>");
+            mainForm.SetText("Message sent to server: " + messageToServer);
+            sslStream.Write(messsage);
+            sslStream.Flush();
+            string serverMessage = ReadMessage(sslStream);
+            mainForm.SetText("Server says: " + serverMessage);
+            writeFlag = false;           
             client.Close();
+            mainForm.DisableStart();
         }
 
         public bool ValidateServerCertificate(object sender, X509Certificate certificate, X509Chain chain, SslPolicyErrors sslPolicyErrors)
@@ -95,5 +89,7 @@ namespace Klijent
         public bool writeFlag = false;
         public bool endChat = false;
         frmClient mainForm = (frmClient)Application.OpenForms[0];
+        TcpClient client;
+        SslStream sslStream;
     }
 }
