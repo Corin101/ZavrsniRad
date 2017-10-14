@@ -38,11 +38,22 @@ namespace Klijent
                 client.Close();
                 return;
             }
-            byte[] messsage = Encoding.UTF8.GetBytes(messageToServer + "<EOF>");
-            sslStream.Write(messsage);
-            sslStream.Flush();
-            string serverMessage = ReadMessage(sslStream);
-            mainForm.SetText("Server says: " + serverMessage);
+            mainForm.sendMsgAvailable();
+            while (true)
+            {
+                if (writeFlag)
+                {
+                    byte[] messsage = Encoding.UTF8.GetBytes(messageToServer + "<EOF>");
+                    mainForm.SetText("Message sent to server: " + messageToServer);
+                    sslStream.Write(messsage);
+                    sslStream.Flush();
+                    string serverMessage = ReadMessage(sslStream);
+                    mainForm.SetText("Server says: " + serverMessage);
+                    writeFlag = false;
+                }
+                if (endChat)
+                    break;
+            }           
             client.Close();
         }
 
@@ -78,9 +89,11 @@ namespace Klijent
 
         private string serverName;
         private string serverCertificateName;
-        private string messageToServer;
+        public string messageToServer;
         private Hashtable certificateErrors = new Hashtable();
         private int listeninigPort;
+        public bool writeFlag = false;
+        public bool endChat = false;
         frmClient mainForm = (frmClient)Application.OpenForms[0];
     }
 }

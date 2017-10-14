@@ -50,6 +50,7 @@
             this.chckServerCertName = new System.Windows.Forms.CheckBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtMsgToServer = new System.Windows.Forms.TextBox();
+            this.btnEndChat = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -247,24 +248,39 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(60, 301);
+            this.label7.Location = new System.Drawing.Point(60, 312);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(166, 17);
             this.label7.TabIndex = 25;
             this.label7.Text = "Send message to server:";
+            this.label7.Visible = false;
             // 
             // txtMsgToServer
             // 
-            this.txtMsgToServer.Location = new System.Drawing.Point(12, 331);
+            this.txtMsgToServer.Location = new System.Drawing.Point(12, 342);
             this.txtMsgToServer.Name = "txtMsgToServer";
             this.txtMsgToServer.Size = new System.Drawing.Size(298, 22);
             this.txtMsgToServer.TabIndex = 26;
+            this.txtMsgToServer.Visible = false;
+            this.txtMsgToServer.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtMsgToServer_KeyUp);
+            // 
+            // btnEndChat
+            // 
+            this.btnEndChat.Location = new System.Drawing.Point(660, 380);
+            this.btnEndChat.Name = "btnEndChat";
+            this.btnEndChat.Size = new System.Drawing.Size(93, 30);
+            this.btnEndChat.TabIndex = 27;
+            this.btnEndChat.Text = "End Client";
+            this.btnEndChat.UseVisualStyleBackColor = true;
+            this.btnEndChat.Visible = false;
+            this.btnEndChat.Click += new System.EventHandler(this.btnEndChat_Click);
             // 
             // frmClient
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(879, 422);
+            this.Controls.Add(this.btnEndChat);
             this.Controls.Add(this.txtMsgToServer);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.chckServerCertName);
@@ -318,6 +334,7 @@
         private System.Windows.Forms.CheckBox chckServerCertName;
         private System.Windows.Forms.Label label7;
         public System.Windows.Forms.TextBox txtMsgToServer;
+        private System.Windows.Forms.Button btnEndChat;
     }
 }
 

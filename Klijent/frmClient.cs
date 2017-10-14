@@ -20,11 +20,9 @@ namespace Klijent
             InitializeComponent();
         }
         #endregion
-        #region START CLIENT
+        #region CLIENT CONFIG
         private void btnStart_Click(object sender, EventArgs e)
         {
-            ClientBuilder client;
-            Thread ClientThread;
 
             client = new ClientBuilder(serverName, serverCertificateName, portNumber);
             DisableStart();
@@ -40,6 +38,27 @@ namespace Klijent
             }
             btnStart.Enabled = false;
         }
+        private void btnEndChat_Click(object sender, EventArgs e)
+        {
+            label7.Visible = false;
+            txtMsgToServer.Visible = false;
+            client.endChat = true;
+        }
+        private void txtMsgToServer_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                client.messageToServer = txtMsgToServer.Text;
+                txtMsgToServer.Text = "";
+                e.Handled = true;
+            }
+        }
+        public void sendMsgAvailable()
+        {
+            label7.Visible = true;
+            txtMsgToServer.Visible = true;
+        }
+
         #endregion
         #region TOOLTIPS & TEXT
         public void SetText(string text)
@@ -166,6 +185,8 @@ namespace Klijent
         private string serverName;
         private string serverCertificateName;
         private X509Certificate certificate;
+        ClientBuilder client;
+        Thread ClientThread;
         #endregion
     }
 }
