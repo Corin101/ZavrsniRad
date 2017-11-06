@@ -38,10 +38,10 @@ namespace Poslužitelj
             while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
-                if (!ValidationAndCommunication(client))
-                    break;
+                ValidationAndCommunication(client);
             }
         }
+
         private bool ValidationAndCommunication(TcpClient client)
         {
             serverCertificate = new X509Certificate();
@@ -68,7 +68,7 @@ namespace Poslužitelj
                 byte[] message = Encoding.UTF8.GetBytes("Server has received your msg!.<EOF>");
                 sslStream.Write(message);
             }
-            catch (AuthenticationException expt)
+            catch (Exception expt)
             {
                 success = false;
                 mainForm.SetText($"Authentication failed: {expt}");

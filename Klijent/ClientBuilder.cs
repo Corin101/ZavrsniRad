@@ -25,9 +25,10 @@ namespace Klijent
         public void RunClient()
         {
             client = new TcpClient(serverName, listeninigPort);
-            sslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
+            
             try
             {
+                sslStream = new SslStream(client.GetStream(), false, new RemoteCertificateValidationCallback(ValidateServerCertificate), null);
                 sslStream.AuthenticateAsClient(serverCertificateName);
             }
             catch (Exception e)
